@@ -47,6 +47,18 @@ class ProdutosRepositorio
         return $dados;
     }
 
+    public function guardarProduto(Produto $produto): bool
+    {
+        $stmt = $this->pdo->prepare("INSERT INTO produtos (nome, tipo, preco, descricao, imagem) VALUES (:nome, :tipo, :preco, :descricao, :imagem)");
+        $stmt->bindValue(':nome', $produto->getNome());
+        $stmt->bindValue(':tipo', $produto->getTipo());
+        $stmt->bindValue(':preco', $produto->getPreco());
+        $stmt->bindValue(':descricao', $produto->getDescricao());
+        $stmt->bindValue(':imagem', $produto->getImagem());
+
+        return $stmt->execute();
+    }
+
     public function excluirProduto(int $id): bool
     {
         $stmt = $this->pdo->prepare("DELETE FROM produtos WHERE id = :id");

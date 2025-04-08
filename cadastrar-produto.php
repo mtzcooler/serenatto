@@ -1,3 +1,19 @@
+<?php
+
+require 'src/conexao-bd.php';
+require 'src/Modelo/Produto.php';
+require 'src/Repositorio/ProdutosRepositorio.php';
+
+if (isset($_POST['cadastro'])){
+    $produto = new Produto(null, $_POST['nome'], $_POST['tipo'], $_POST['preco'], $_POST['descricao']);
+    $repositorio = new ProdutosRepositorio($pdo);
+    $repositorio->guardarProduto($produto);
+
+    header('Location: admin.php');
+}
+
+?>
+
 <!doctype html>
 <html lang="pt-br">
 <head>
@@ -24,7 +40,7 @@
         <img class= "ornaments" src="img/ornaments-coffee.png" alt="ornaments">
     </section>
     <section class="container-form">
-        <form action="#">
+        <form method="post">
 
             <label for="nome">Nome</label>
             <input type="text" id="nome" name="nome" placeholder="Digite o nome do produto" required>

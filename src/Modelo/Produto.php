@@ -2,23 +2,21 @@
 
 class Produto
 {
-    private $id;
-    private $nome;
-    private $tipo;
-    private $preco;
-    private $descricao;
-    private $imagem;
-    private $quantidade;
+    private ?int $id;
+    private string $nome;
+    private string $tipo;
+    private string $preco;
+    private string $descricao;
+    private string $imagem;
 
-    public function __construct($id, $nome, $tipo, $preco, $descricao, $imagem, $quantidade)
+    public function __construct(?int $id, string $nome, string $tipo, string $preco, string $descricao, string $imagem = 'logo-serenatto.png')
     {
         $this->id = $id;
         $this->nome = $nome;
-        $this->tipo = $tipo;
+        $this->tipo = $tipo == 'Café' ? 'cafe' : 'almoco';
         $this->preco = $preco;
         $this->descricao = $descricao;
         $this->imagem = $imagem;
-        $this->quantidade = $quantidade;
     }
 
     public function getId()
@@ -44,11 +42,6 @@ class Produto
     public function getDescricao()
     {
         return $this->descricao;
-    }
-
-    public function getQuantidade()
-    {
-        return $this->quantidade;
     }
 
     public function getImagem()
