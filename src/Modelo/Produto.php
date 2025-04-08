@@ -4,15 +4,17 @@ class Produto
 {
     private $id;
     private $nome;
+    private $tipo;
     private $preco;
     private $descricao;
     private $imagem;
     private $quantidade;
 
-    public function __construct($id, $nome, $preco, $descricao, $imagem, $quantidade)
+    public function __construct($id, $nome, $tipo, $preco, $descricao, $imagem, $quantidade)
     {
         $this->id = $id;
         $this->nome = $nome;
+        $this->tipo = $tipo;
         $this->preco = $preco;
         $this->descricao = $descricao;
         $this->imagem = $imagem;
@@ -27,6 +29,11 @@ class Produto
     public function getNome()
     {
         return $this->nome;
+    }
+
+    public function getTipo()
+    {
+        return $this->tipo;
     }
 
     public function getPreco()
