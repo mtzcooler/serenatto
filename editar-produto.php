@@ -8,8 +8,12 @@ $repositorio = new ProdutosRepositorio($pdo);
 
 if (isset($_POST['editar'])){
   $tipoNaoFormatado = $_POST['tipo'] == 'Café' ? 'cafe' : 'almoco';
+  $imagem = 'logo-serenatto.png';
+  if ($_FILES['imagem']['error'] == UPLOAD_ERR_OK) {
+      $imagem = $_FILES['imagem']['name'];
+  }
 
-  $produto = new Produto($_POST['id'], $_POST['nome'], $tipoNaoFormatado, $_POST['preco'], $_POST['descricao']);
+  $produto = new Produto($_POST['id'], $_POST['nome'], $tipoNaoFormatado, $_POST['preco'], $_POST['descricao'], $imagem);
 
   $repositorio->atualizarProduto($produto);
 
@@ -46,7 +50,7 @@ if (isset($_POST['editar'])){
     <img class= "ornaments" src="img/ornaments-coffee.png" alt="ornaments">
   </section>
   <section class="container-form">
-    <form method="post">
+    <form method="post" enctype="multipart/form-data">
       <input type="hidden" name="id" value="<?= $produto->getId()?>">
 
       <label for="nome">Nome</label>

@@ -8,8 +8,12 @@ $repositorio = new ProdutosRepositorio($pdo);
 
 if (isset($_POST['cadastrar'])){
     $tipoNaoFormatado = $_POST['tipo'] == 'Café' ? 'cafe' : 'almoco';
+    $imagem = 'logo-serenatto.png';
+    if ($_FILES['imagem']['error'] == UPLOAD_ERR_OK) {
+        $imagem = $_FILES['imagem']['name'];
+    }
 
-    $produto = new Produto(null, $_POST['nome'], $tipoNaoFormatado, $_POST['preco'], $_POST['descricao']);
+    $produto = new Produto(null, $_POST['nome'], $tipoNaoFormatado, $_POST['preco'], $_POST['descricao'], $imagem);    
 
     $repositorio->guardarProduto($produto);
 
@@ -44,7 +48,7 @@ if (isset($_POST['cadastrar'])){
         <img class= "ornaments" src="img/ornaments-coffee.png" alt="ornaments">
     </section>
     <section class="container-form">
-        <form method="post">
+        <form method="post" enctype="multipart/form-data">
 
             <label for="nome">Nome</label>
             <input type="text" id="nome" name="nome" placeholder="Digite o nome do produto" required>
