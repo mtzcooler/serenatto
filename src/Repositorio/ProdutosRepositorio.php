@@ -47,9 +47,37 @@ class ProdutosRepositorio
         return $dados;
     }
 
+    public function buscarProdutoPorId(int $id): ?Produto
+    {
+        $stmt = $this->pdo->prepare("SELECT * FROM produtos WHERE id = :id");
+        $stmt->bindValue(':id', $id);
+        $stmt->execute();
+
+        $produto = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($produto) {
+            return $this->formarObjeto($produto);
+        }
+
+        return null;
+    }
+
     public function guardarProduto(Produto $produto): bool
     {
         $stmt = $this->pdo->prepare("INSERT INTO produtos (nome, tipo, preco, descricao, imagem) VALUES (:nome, :tipo, :preco, :descricao, :imagem)");
+        $stmt->bindValue(':nome', $produto->getNome());
+        $stmt->bindValue(':tipo', $produto->getTipo());
+        $stmt->bindValue(':preco', $produto->getPreco());
+        $stmt->bindValue(':descricao', $produto->getDescricao());
+        $stmt->bindValue(':imagem', $produto->getImagem());
+
+        return $stmt->execute();
+    }
+
+    public function atualizarProduto(Produto $produto): bool
+    {
+        $stmt = $this->pdo->prepare("UPDATE produtos SET nome = :nome, tipo = :tipo, preco = :preco, descricao = :descricao, imagem = :imagem WHERE id = :id");
+        $stmt->bindValue(':id', $produto->getId());
         $stmt->bindValue(':nome', $produto->getNome());
         $stmt->bindValue(':tipo', $produto->getTipo());
         $stmt->bindValue(':preco', $produto->getPreco());

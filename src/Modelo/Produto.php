@@ -13,7 +13,7 @@ class Produto
     {
         $this->id = $id;
         $this->nome = $nome;
-        $this->tipo = $tipo == 'Café' ? 'cafe' : 'almoco';
+        $this->tipo = $tipo;
         $this->preco = $preco;
         $this->descricao = $descricao;
         $this->imagem = $imagem;
@@ -32,6 +32,11 @@ class Produto
     public function getTipo()
     {
         return $this->tipo;
+    }
+
+    public function getTipoFormatado()
+    {
+        return $this->tipo == 'cafe' ? 'Café' : 'Almoço';
     }
 
     public function getPreco()

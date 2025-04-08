@@ -4,9 +4,13 @@ require 'src/conexao-bd.php';
 require 'src/Modelo/Produto.php';
 require 'src/Repositorio/ProdutosRepositorio.php';
 
-if (isset($_POST['cadastro'])){
-    $produto = new Produto(null, $_POST['nome'], $_POST['tipo'], $_POST['preco'], $_POST['descricao']);
-    $repositorio = new ProdutosRepositorio($pdo);
+$repositorio = new ProdutosRepositorio($pdo);
+
+if (isset($_POST['cadastrar'])){
+    $tipoNaoFormatado = $_POST['tipo'] == 'Café' ? 'cafe' : 'almoco';
+
+    $produto = new Produto(null, $_POST['nome'], $tipoNaoFormatado, $_POST['preco'], $_POST['descricao']);
+
     $repositorio->guardarProduto($produto);
 
     header('Location: admin.php');
@@ -63,7 +67,7 @@ if (isset($_POST['cadastro'])){
             <label for="imagem">Envie uma imagem do produto</label>
             <input type="file" name="imagem" accept="image/*" id="imagem" placeholder="Envie uma imagem">
 
-            <input type="submit" name="cadastro" class="botao-cadastrar" value="Cadastrar produto"/>
+            <input type="submit" name="cadastrar" class="botao-cadastrar" value="Cadastrar produto"/>
         </form>
     
     </section>
